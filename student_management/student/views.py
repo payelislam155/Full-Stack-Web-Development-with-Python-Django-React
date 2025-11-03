@@ -12,6 +12,7 @@ def home(request):
         inputPassword = request.POST.get("inputPassword")
         checkbox = request.POST.get("checkbox")
         photo = request.FILES.get("photo")
+        print(request.FILES)
         if checkbox == "on":
             checkbox = True
         else:

@@ -72,7 +72,7 @@
       </div>
     </nav>
 
-    <form class="container" method="post" enctype="multipart/form_data">
+    <form class="container" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <h1>Student Form</h1>
       <div class="mb-3">
@@ -125,7 +125,7 @@
       <div class="mb-3">
         <label for="formFile" class="form-label"
           >Photo</label>
-        <input class="form-control" type="file" id="formFile" name="photos" required />
+        <input class="form-control" type="file" id="formFile" name="photo" required />
       </div>
 
       <div class="mb-3 form-check">
