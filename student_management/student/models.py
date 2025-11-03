@@ -8,6 +8,7 @@ class Student(models.Model):
     inputPassword = models.CharField(max_length=10)
     checkbox = models.BooleanField(default=False)
     photo = models.ImageField(upload_to='photos/',default=None, null=True)
+
     
     def __str__(self):
         return f"{self.name}"

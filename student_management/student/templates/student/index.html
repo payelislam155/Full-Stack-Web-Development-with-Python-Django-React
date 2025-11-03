@@ -1,3 +1,4 @@
+{%load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -72,6 +73,8 @@
       </div>
     </nav>
 
+    
+    {% comment %}
     <form class="container" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <h1>Student Form</h1>
@@ -123,9 +126,14 @@
       </div>
 
       <div class="mb-3">
-        <label for="formFile" class="form-label"
-          >Photo</label>
-        <input class="form-control" type="file" id="formFile" name="photo" required />
+        <label for="formFile" class="form-label">Photo</label>
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          name="photo"
+          required
+        />
       </div>
 
       <div class="mb-3 form-check">
@@ -137,6 +145,36 @@
         />
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% endcomment %}
+     <h1 class="py-3 container">All student List</h1>
+    <div class="d-flex flex-wrap justify-content-between container">
+        {% for student in students %} 
+          <div class="card col-3" style="width: 18rem">
+            <img src="{{student.photo.url}}" class="card-img-top" alt="..." height="200" width="200"/>
+            <div class="card-body">
+              <h5 class="card-title">{{student.name}}</h5>
+              <p class="card-text">
+                <p>{{student.inputEmail}}</p>
+                <p>{{student.inputPhone}}</p>
+              </p>
+              <a href="#" class="btn btn-warning">Edit</a>
+              <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+
+        {% endfor %}
+    </div>
+
+    <form
+      class="container"
+      method="post"
+      enctype="multipart/form-data"
+      novalidate
+    >
+      {% csrf_token %} 
+      {{ form|crispy }}
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <script
