@@ -30,10 +30,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="{% url 'create_student' %}">Create Student</a>
             </li>
             <li class="nav-item dropdown">
               <a
@@ -148,6 +148,13 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     {% endcomment %}
+    {% if  messages %}
+      <ul class=" messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
      <h1 class="py-3 container">All student List</h1>
     <div class="d-flex flex-wrap justify-content-between container">
         {% for student in students %} 
@@ -156,11 +163,12 @@
             <div class="card-body">
               <h5 class="card-title">{{student.name}}</h5>
               <p class="card-text">
+                <p>{{student.id}}</p>
                 <p>{{student.inputEmail}}</p>
                 <p>{{student.inputPhone}}</p>
               </p>
-              <a href="#" class="btn btn-warning">Edit</a>
-              <a href="#" class="btn btn-danger">Delete</a>
+              <a href="{% url 'updated_student' id=student.id %}" class="btn btn-warning">Edit</a>
+              <a href="{% url 'delete_student' id=student.id %}" class="btn btn-danger">Delete</a>
             </div>
           </div>
 

@@ -1,6 +1,7 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from . import models
 from . import forms
+from django.contrib import messages
 # Create your views here.
 # def home(request):
 #     print(request.POST)
@@ -25,17 +26,36 @@ from . import forms
 
 
 #This is the Model form
-def home(request):
+def create_student(request):
    
     if request.method == "POST":
         form = forms.StudentForm(request.POST, request.FILES)
         if form.is_valid():
            form.save()
-           return HttpResponse("student object created successfully")
+           messages.add_message(request, messages.SUCCESS, 'Student updated successfully.')
+           return redirect('home')
     else:
          form = forms.StudentForm()
-    return render(request,'student/index.html',{'form':form})
+    return render(request,'student/create_edit_student.html',{'form':form})
     
-def student_list(request):
+def home(request):
     students = models.Student.objects.all()
     return render(request,'student/index.html',{'students':students})
+
+def updated_student(request,id):
+    student = models.Student.objects.get(id=id)
+    form = forms.StudentForm(instance=student)
+    # form = forms.StudentForm()
+    if request.method == "POST":
+        form = forms.StudentForm(request.POST, request.FILES, instance=student)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Student updated successfully.')
+            return redirect('home')
+    return render(request,'student/create_edit_student.html',{'form':form, 'edit':True})
+
+def delete_student(request,id):
+    student = models.Student.objects.get(id=id)
+    messages.add_message(request, messages.SUCCESS, 'Student delete successfully.')
+    student.delete()
+    return redirect('home')
